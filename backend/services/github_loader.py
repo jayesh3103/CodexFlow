@@ -2,7 +2,7 @@ import requests
 import base64
 from typing import Tuple
 
-GITHUB_TOKEN = "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"  # fine-grained or classic
+GITHUB_TOKEN = ""  # fine-grained or classic --- github token
 
 def parse_github_url(url: str) -> Tuple[str, str]:
     parts = url.rstrip("/").split("/")
