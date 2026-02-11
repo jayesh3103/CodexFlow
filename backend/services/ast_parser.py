@@ -45,21 +45,31 @@ class AstParser:
         # Simple extraction logic based on node types
         # This is a prototype simplification. Complete queries would be better.
         
-        def traverse(node):
+        def traverse(node, parent_name=None):
+            current_name = parent_name
+            
             if node.type in ["function_definition", "class_definition", "function_declaration", "class_declaration"]:
                 # Extract name
                 name_node = node.child_by_field_name("name")
                 if name_node:
                     name = code[name_node.start_byte:name_node.end_byte]
+                    
+                    def_type = "class" if "class" in node.type else "function"
+                    
                     definitions.append({
-                        "type": "class" if "class" in node.type else "function",
+                        "type": def_type,
                         "name": name,
+                        "parent": parent_name,
                         "start_line": node.start_point[0],
                         "end_line": node.end_point[0]
                     })
+                    
+                    # If this is a class, it becomes the parent for its children
+                    if def_type == "class":
+                        current_name = name
             
             for child in node.children:
-                traverse(child)
+                traverse(child, current_name)
                 
         traverse(root_node)
         return definitions
