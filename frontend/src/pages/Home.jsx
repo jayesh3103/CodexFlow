@@ -16,11 +16,31 @@ const Home = () => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
 
+    // Load initial state from localStorage
+    const getSavedStats = () => {
+        try {
+            const saved = localStorage.getItem('codexflow_stats');
+            return saved ? JSON.parse(saved) : {};
+        } catch (e) {
+            console.error("Failed to load stats", e);
+            return {};
+        }
+    };
+
+    const initialStats = getSavedStats();
+
     // Gamification State
-    const [xp, setXp] = useState(0);
-    const [level, setLevel] = useState(1);
-    const [streak, setStreak] = useState(0);
-    const [unlockedBadges, setUnlockedBadges] = useState([]);
+    const [xp, setXp] = useState(initialStats.xp || 0);
+    const [level, setLevel] = useState(initialStats.level || 1);
+    const [streak, setStreak] = useState(initialStats.streak || 0);
+    const [unlockedBadges, setUnlockedBadges] = useState(initialStats.unlockedBadges || []);
+
+    // Save state changes to localStorage
+    useEffect(() => {
+        localStorage.setItem('codexflow_stats', JSON.stringify({
+            xp, level, streak, unlockedBadges
+        }));
+    }, [xp, level, streak, unlockedBadges]);
 
     const resultsRef = useRef(null);
     const inputRef = useRef(null);
