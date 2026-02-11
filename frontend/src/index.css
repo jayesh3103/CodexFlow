@@ -5,17 +5,14 @@
 @layer base {
   body {
     @apply bg-background text-gray-100 font-sans selection:bg-primary/30 antialiased;
-    background-image:
-      radial-gradient(
-        circle at 15% 50%,
-        rgba(188, 19, 254, 0.05),
-        transparent 25%
-      ),
-      radial-gradient(
-        circle at 85% 30%,
-        rgba(0, 243, 255, 0.05),
-        transparent 25%
-      );
+    /* Cyberpunk Grid Background */
+    background-color: #030712;
+    background-image: 
+      linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(188, 19, 254, 0.1) 0%, transparent 50%);
+    background-size: 50px 50px, 50px 50px, 100% 100%;
+    background-attachment: fixed;
   }
 }
 
