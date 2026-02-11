@@ -8,96 +8,99 @@ const RepoInput = ({ onAnalyze, loading }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (url && filePath) {
-            onAnalyze(url, filePath);
-        }
+        onAnalyze(url, filePath);
     };
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full max-w-3xl mx-auto text-center"
+            className="w-full max-w-4xl mx-auto my-20 px-4"
         >
-            <div className="glass-panel rounded-2xl p-8 md:p-12 relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-secondary opacity-70"></div>
+            <div className="relative group perspective-1000">
+                {/* Glow Effects */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent opacity-30 blur-2xl group-hover:opacity-50 transition duration-1000"></div>
+                
+                <div className="glass-panel p-10 relative overflow-hidden backdrop-blur-3xl bg-surface/40 border border-white/5">
+                    
+                    {/* Floating Background Elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float"></div>
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" style={{animationDelay: '2s'}}></div>
 
-                {/* Background Glow */}
-                <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-[80px] group-hover:bg-primary/30 transition-all duration-700"></div>
-                <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-accent/20 rounded-full blur-[80px] group-hover:bg-accent/30 transition-all duration-700"></div>
-
-                <div className="relative z-10">
-                    <motion.div
-                        initial={{ scale: 0.9 }}
-                        animate={{ scale: 1 }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-blue-300 mb-6"
-                    >
-                        <Sparkles size={14} />
-                        <span>AI-Powered Code Analysis</span>
-                    </motion.div>
-
-                    <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                            Understand Code
-                        </span>
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent ml-2">
-                            Instantly
-                        </span>
-                    </h2>
-
-                    <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
-                        Turn any GitHub file into an interactive lesson. varied dependency graphs, smart explanations, and auto-generated quizzes.
-                    </p>
-
-                    <form onSubmit={handleSubmit} className="space-y-4 max-w-xl mx-auto">
-                        <div className="relative group">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Github className="h-5 w-5 text-gray-500 group-focus-within:text-primary transition-colors" />
-                            </div>
-                            <input
-                                type="text"
-                                value={url}
-                                onChange={(e) => setUrl(e.target.value)}
-                                placeholder="https://github.com/owner/repo"
-                                className="glass-input w-full pl-12 pr-4 py-4 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary/50 focus:outline-none"
-                                required
-                            />
-                        </div>
-                        <div className="relative group">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <FileCode className="h-5 w-5 text-gray-500 group-focus-within:text-accent transition-colors" />
-                            </div>
-                            <input
-                                type="text"
-                                value={filePath}
-                                onChange={(e) => setFilePath(e.target.value)}
-                                placeholder="path/to/file.py"
-                                className="glass-input w-full pl-12 pr-4 py-4 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-accent/50 focus:outline-none"
-                                required
-                            />
+                    <div className="relative z-10 text-center space-y-8">
+                        
+                        <div className="space-y-4">
+                            <motion.span 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.5 }}
+                                className="inline-block px-4 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono tracking-widest text-primary uppercase"
+                            >
+                                AI-Powered Code Analysis
+                            </motion.span>
+                            
+                            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+                                <span className="text-white">Decode</span>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary ml-4">
+                                    Reality
+                                </span>
+                            </h1>
+                            
+                            <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                                Transform purely textual codebases into interactive visual lessons. 
+                                <br className="hidden md:block"/>
+                                Experience code in a new dimension.
+                            </p>
                         </div>
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] ${loading
-                                    ? 'bg-surface border border-white/10 cursor-not-allowed text-gray-400'
-                                    : 'bg-gradient-to-r from-primary to-blue-600 hover:shadow-lg hover:shadow-primary/25 border border-primary/50'
-                                }`}
-                        >
-                            {loading ? (
-                                <span className="flex items-center justify-center gap-2">
-                                    <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
-                                    Analyzing Codebase...
+                        <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto pt-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="relative group/input">
+                                    <Github className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within/input:text-primary transition-colors duration-300" />
+                                    <input
+                                        type="text"
+                                        value={url}
+                                        onChange={(e) => setUrl(e.target.value)}
+                                        placeholder="github.com/owner/repo"
+                                        className="w-full bg-background/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all duration-300 outline-none"
+                                        required
+                                    />
+                                </div>
+                                <div className="relative group/input">
+                                    <FileCode className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within/input:text-secondary transition-colors duration-300" />
+                                    <input
+                                        type="text"
+                                        value={filePath}
+                                        onChange={(e) => setFilePath(e.target.value)}
+                                        placeholder="path/to/file.py"
+                                        className="w-full bg-background/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all duration-300 outline-none"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full relative group overflow-hidden rounded-xl bg-white text-black p-4 font-bold text-lg tracking-wide transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary via-white to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <span className="relative flex items-center justify-center gap-3">
+                                    {loading ? (
+                                        <>
+                                            <span className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></span>
+                                            Initializing Neural Link...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Initiate Analysis <Sparkles className="w-5 h-5" />
+                                        </>
+                                    )}
                                 </span>
-                            ) : (
-                                <span className="flex items-center justify-center gap-2">
-                                    Generate Onboarding Guide <Search size={20} />
-                                </span>
-                            )}
-                        </button>
-                    </form>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </motion.div>
